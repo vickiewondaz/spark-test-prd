@@ -53,3 +53,16 @@ accounts/ ideas/ dashboard/ uploads/
 media/ db.sqlite3 .venv/
 requirements.txt README.md .gitignore
 ```
+
+## Agent change log (in order requested)
+1. Linked local folder `/Users/mac/Documents/SPARK TEST PRD` to OpenCode as working dir.
+2. Connected folder to GitHub: created public repo `vickiewondaz/spark-test-prd`, `main`, pushed initial `SPARK TEST PRD.docx` (`a084a09`).
+3. Read `.docx` PRD (174 paras) and wrote phased implementation plan (Phases 0–5 with concrete outputs).
+4. Named local stack: Django 5 + Tailwind + HTMX / SQLite `db.sqlite3` / Django built-in auth / local `media/` — app & DB local only.
+5. Explained scaffold = empty runnable skeleton (settings, apps, routes, DB, media).
+6. Compared better alternatives: Next.js (rich UI/streaming), FastAPI+React (heavy AI), Postgres (concurrency/search/vectors), Clerk/Supabase (social login), S3/MinIO (scale/CDN) — kept local stack for speed.
+7. Locked scope: LOCAL TEST RUN APP, no Docker/cloud/deploy.
+8. Scaffolded Django: `spark` project + `accounts, ideas, dashboard, uploads` apps, Idea/Task/Note/Milestone/Attachment models, placeholder views/urls/templates, `requirements.txt`, `.gitignore`; `check` + `migrate` clean (`85ecaa8` pushed).
+9. Wrote this PRD.md decision note.
+10. Created `design.html`: unique SPARK × Shopify Polaris preview (colors, typography, buttons, inputs) (`4213a45` pushed).
+11. Re-themed `design.html` to warm/vibrant/hopeful sunrise: cream `#FFF7ED`, ember `#EA580C`→hover `#C2410C`, honey `#F59E0B`, peach `#FDBA74`, espresso text `#431407` (`dc21bff` pushed).
