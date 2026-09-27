@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SPARK × Shopify Polaris — Visual Preview</title>
+<style>
+  /* Shopify Polaris v12 token approximations (light) */
+  :root{
+    --p-color-bg: rgba(241,241,241,1);
+    --p-color-bg-surface: rgba(255,255,255,1);
+    --p-color-bg-surface-hover: rgba(247,247,247,1);
+    --p-color-bg-surface-active: rgba(243,243,243,1);
+    --p-color-bg-fill-brand: rgba(48,48,48,1);
+    --p-color-bg-fill-brand-hover: rgba(26,26,26,1);
+    --p-color-bg-fill-brand-active: rgba(26,26,26,1);
+    --p-color-bg-fill-brand-disabled: rgba(0,0,0,0.17);
+    --p-color-bg-fill-info: rgba(0,91,211,1);
+    --p-color-bg-fill-info-secondary: rgba(145,208,255,1);
+    --p-color-bg-fill-critical: rgba(142,11,33,1);
+    --p-color-bg-fill-success: rgba(0,128,96,1);
+    --p-color-bg-fill-warning: rgba(255,214,83,1);
+    --p-color-text: rgba(48,48,48,1);
+    --p-color-text-secondary: rgba(97,97,97,1);
+    --p-color-text-on-brand: rgba(255,255,255,1);
+    --p-color-text-info: rgba(0,58,90,1);
+    --p-color-text-critical: rgba(142,11,33,1);
+    --p-color-text-success: rgba(0,82,62,1);
+    --p-color-input-bg-surface: rgba(255,255,255,1);
+    --p-color-input-border: rgba(163,163,163,1);
+    --p-color-input-border-hover: rgba(97,97,97,1);
+    --p-color-border: rgba(227,227,227,1);
+    --p-color-border-focus: rgba(0,91,211,1);
+    --p-color-icon: rgba(74,74,74,1);
+    --p-border-radius-100: 4px;
+    --p-border-radius-200: 8px;
+    --p-border-radius-300: 12px;
+    --p-border-radius-400: 16px;
+    --p-shadow-card: 0 1px 2px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.08);
+    --p-shadow-popover: 0 8px 32px rgba(0,0,0,.16);
+    --p-font-family: "Inter", -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:var(--p-font-family); background:var(--p-color-bg); color:var(--p-color-text);
+    -webkit-font-smoothing:antialiased;
+  }
+  .spark-hero{
+    background: radial-gradient(1200px 400px at 20% -10%, #BEF0FF 0%, transparent 60%),
+                radial-gradient(900px 380px at 90% 0%, #FFD6A8 0%, transparent 55%),
+                linear-gradient(180deg, #1A1A1A 0%, #303030 100%);
+    color:#fff; padding:56px 32px 48px; position:relative; overflow:hidden;
+  }
+  .spark-hero::after{
+    content:"IDEA → CLARIFY → PLAN → BUILD → TRACK → COMPLETE";
+    position:absolute; bottom:14px; left:32px; right:32px;
+    font-size:11px; letter-spacing:.22em; opacity:.55; white-space:nowrap; overflow:hidden;
+  }
+  .wrap{max-width:1080px; margin:0 auto}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); padding:6px 12px; border-radius:999px}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:#00D080; box-shadow:0 0 0 4px rgba(0,208,128,.25)}
+  h1.hero-title{font-size:44px; line-height:1.05; margin:18px 0 10px; letter-spacing:-.03em}
+  h1.hero-title .accent{background:linear-gradient(90deg,#91D0FF,#FFD6A8); -webkit-background-clip:text; background-clip:text; color:transparent}
+  p.hero-sub{font-size:16px; line-height:1.6; opacity:.82; max-width:640px; margin:0 0 22px}
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap}
+  .grid{display:grid; gap:16px}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr)}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.grid.cols-4,.grid.cols-3,.grid.cols-2{grid-template-columns:1fr} h1.hero-title{font-size:32px}}
+  .card{background:var(--p-color-bg-surface); border:1px solid var(--p-color-border); border-radius:var(--p-border-radius-300);
+    box-shadow:var(--p-shadow-card); padding:20px}
+  .section{padding:28px 32px}
+  .section-title{font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--p-color-text-secondary); margin:0 0 6px}
+  .section-h{font-size:24px; letter-spacing:-.02em; margin:0 0 6px}
+  .section-p{font-size:14px; color:var(--p-color-text-secondary); margin:0 0 16px; line-height:1.6}
+  /* Polaris buttons */
+  .p-btn{appearance:none; border:1px solid transparent; border-radius:var(--p-border-radius-200);
+    font-family:var(--p-font-family); font-size:14px; font-weight:600; line-height:20px;
+    padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .15s ease; text-decoration:none}
+  .p-btn-primary{background:var(--p-color-bg-fill-brand); color:var(--p-color-text-on-brand); box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+  .p-btn-primary:hover{background:var(--p-color-bg-fill-brand-hover)}
+  .p-btn-primary:active{background:var(--p-color-bg-fill-brand-active)}
+  .p-btn-secondary{background:var(--p-color-bg-surface); border-color:var(--p-color-input-border); color:var(--p-color-text)}
+  .p-btn-secondary:hover{background:var(--p-color-bg-surface-hover); border-color:var(--p-color-input-border-hover)}
+  .p-btn-info{background:var(--p-color-bg-fill-info); color:#fff}
+  .p-btn-critical{background:var(--p-color-bg-fill-critical); color:#fff}
+  .p-btn-success{background:var(--p-color-bg-fill-success); color:#fff}
+  .p-btn:disabled{background:var(--p-color-bg-fill-brand-disabled); color:#fff; cursor:not-allowed}
+  .p-btn-large{padding:12px 22px; font-size:15px; border-radius:10px}
+  /* Polaris inputs */
+  label.p-label{font-size:13px; font-weight:600; display:block; margin:0 0 6px}
+  .p-hint{font-size:12px; color:var(--p-color-text-secondary); margin:6px 0 0}
+  .p-input, .p-select, .p-textarea{
+    width:100%; background:var(--p-color-input-bg-surface); border:1px solid var(--p-color-input-border);
+    border-radius:var(--p-border-radius-200); padding:10px 12px; font-size:14px; font-family:var(--p-font-family); color:var(--p-color-text);
+    outline:none; transition:border-color .15s, box-shadow .15s;
+  }
+  .p-input:hover, .p-select:hover, .p-textarea:hover{border-color:var(--p-color-input-border-hover)}
+  .p-input:focus, .p-select:focus, .p-textarea:focus{border-color:var(--p-color-border-focus); box-shadow:0 0 0 2px rgba(0,91,211,.25)}
+  .p-input-error{border-color:var(--p-color-bg-fill-critical)}
+  .swatch{border-radius:12px; overflow:hidden; border:1px solid var(--p-color-border); background:#fff}
+  .swatch .chip{height:72px}
+  .swatch .meta{padding:10px 12px}
+  .swatch .token{font-size:12px; font-weight:700}
+  .swatch .hex{font-size:12px; color:var(--p-color-text-secondary); font-variant-numeric:tabular-nums}
+  .type-spec{border-left:3px solid var(--p-color-border-focus); padding:4px 0 4px 14px; margin:12px 0}
+  .badge{display:inline-block; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; border:1px solid var(--p-color-border)}
+  .badge-info{background:rgba(145,208,255,.35); border-color:rgba(0,91,211,.3); color:var(--p-color-text-info)}
+  .badge-success{background:rgba(0,208,128,.18); border-color:rgba(0,128,96,.3); color:var(--p-color-text-success)}
+  .badge-critical{background:rgba(255,179,193,.3); border-color:rgba(142,11,33,.3); color:var(--p-color-text-critical)}
+  .next-action{background:linear-gradient(135deg,#1A1A1A,#303030); color:#fff; border-radius:16px; padding:22px; position:relative; overflow:hidden}
+  .next-action::before{content:""; position:absolute; inset:-40px -40px auto auto; width:220px; height:220px;
+    background:radial-gradient(circle at center, rgba(145,208,255,.5), transparent 70%)}
+  kbd{font-family:inherit; font-size:12px; background:#fff; border:1px solid var(--p-color-border); border-bottom-width:2px; border-radius:6px; padding:1px 6px}
+</style>
+</head>
+<body>
+
+<header class="spark-hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> SPARK × Shopify Polaris • local preview</span>
+    <h1 class="hero-title">Turn small ideas into <span class="accent">real action.</span></h1>
+    <p class="hero-sub">Unique SPARK skin built strictly on Polaris tokens — same colors, type, buttons and inputs as Shopify admin, remixed into an idea-to-action workspace.</p>
+    <div class="hero-actions">
+      <button class="p-btn p-btn-primary p-btn-large">✦ Capture an idea</button>
+      <button class="p-btn p-btn-secondary p-btn-large" style="background:#fff">View dashboard</button>
+      <span class="badge badge-info" style="align-self:center">Polaris v12 tokens</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section">
+    <p class="section-title">01 — Colors (Polaris roles)</p>
+    <h2 class="section-h">Semantic color system</h2>
+    <p class="section-p">Tokens are named by <kbd>color</kbd> + element (<kbd>bg / text / border / icon</kbd>) + role + state. Values below match Polaris light theme.</p>
+    <div class="grid cols-4">
+      <div class="swatch"><div class="chip" style="background:rgba(241,241,241,1)"></div><div class="meta"><div class="token">--p-color-bg</div><div class="hex">#F1F1F1 • admin canvas</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(255,255,255,1); border-bottom:1px solid #eee"></div><div class="meta"><div class="token">--p-color-bg-surface</div><div class="hex">#FFFFFF • cards</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(48,48,48,1)"></div><div class="meta"><div class="token">--p-color-bg-fill-brand</div><div class="hex">#303030 • primary button</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(26,26,26,1)"></div><div class="meta"><div class="token">--p-color-bg-fill-brand-hover</div><div class="hex">#1A1A1A • hover / active</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(0,91,211,1)"></div><div class="meta"><div class="token">--p-color-bg-fill-info</div><div class="hex">#005BD1 • focus / info</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(145,208,255,1)"></div><div class="meta"><div class="token">--p-color-bg-fill-info-secondary</div><div class="hex">#91D0FF • badge / highlight</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(0,128,96,1)"></div><div class="meta"><div class="token">--p-color-bg-fill-success</div><div class="hex">#008060 • completed</div></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(142,11,33,1)"></div><div class="meta"><div class="token">--p-color-bg-fill-critical</div><div class="hex">#8E0B21 • destructive</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-title">02 — Typography (Polaris + Inter)</p>
+    <h2 class="section-h">One family, clear hierarchy</h2>
+    <p class="section-p">Polaris uses Inter with semantic variants. SPARK maps them: hero → headingLg, cards → headingMd, body → bodyMd, meta → caption.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <span class="badge badge-info">headingLg • 24px / 600 / -0.02em</span>
+        <div class="type-spec" style="font-size:24px; font-weight:600; letter-spacing:-.02em; line-height:1.25">Solar charging station for barbers</div>
+        <span class="badge">headingMd • 16px / 600</span>
+        <div class="type-spec" style="font-size:16px; font-weight:600; line-height:1.4">What problem does it solve?</div>
+        <span class="badge badge-success">bodyMd • 14px / 400</span>
+        <div class="type-spec" style="font-size:14px; line-height:1.6">Barbers lose income during power cuts. A low-cost solar station keeps clippers and lights running.</div>
+        <span class="badge badge-critical">caption • 12px / secondary</span>
+        <div class="type-spec" style="font-size:12px; color:var(--p-color-text-secondary)">Created today • Stage: Planning • 3/7 tasks</div>
+      </div>
+      <div class="card">
+        <p class="section-title">Type scale in use</p>
+        <p style="font-size:28px; font-weight:700; letter-spacing:-.03em; margin:8px 0">Aa — Clarity first.</p>
+        <p style="font-size:14px; color:var(--p-color-text-secondary); line-height:1.7">Polaris rule: don’t overwhelm. SPARK shows <strong style="color:var(--p-color-text)">one next step</strong>, not a 40-page plan. Font stack: <kbd>Inter, -apple-system, San Francisco, Segoe UI</kbd>.</p>
+        <p style="margin:12px 0 0"><span class="badge">400 regular</span> <span class="badge">600 semibold</span> <span class="badge">700 bold</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-title">03 — Buttons (Polaris actions)</p>
+    <h2 class="section-h">Styled actions</h2>
+    <p class="section-p">Primary = <kbd>bg-fill-brand #303030</kbd> → hover <kbd>#1A1A1A</kbd>. Focus ring = <kbd>border-focus #005BD1</kbd> at 25% opacity.</p>
+    <div class="card">
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+        <button class="p-btn p-btn-primary">Generate action plan</button>
+        <button class="p-btn p-btn-secondary">Ask assistant</button>
+        <button class="p-btn p-btn-info">Mark next action done</button>
+        <button class="p-btn p-btn-success">Complete milestone ✓</button>
+        <button class="p-btn p-btn-critical">Delete idea</button>
+        <button class="p-btn p-btn-primary" disabled>Disabled</button>
+      </div>
+      <p class="p-hint">Hover the primary button to see <kbd>hover #1A1A1A</kbd>. Tab to a button to see the Polaris focus ring.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-title">04 — Inputs (Polaris forms)</p>
+    <h2 class="section-h">Sample idea capture</h2>
+    <p class="section-p">Input role: white surface, <kbd>#A3A3A3</kbd> border → hover <kbd>#616161</kbd> → focus <kbd>#005BD1</kbd> + soft ring. WCAG-safe.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <label class="p-label" for="idea">Idea title</label>
+        <input id="idea" class="p-input" value="Low-cost solar charging station for barbers" />
+        <p class="p-hint">Stored as <kbd>ideas.title</kbd> in SQLite.</p>
+        <div style="height:12px"></div>
+        <label class="p-label" for="desc">Short description</label>
+        <textarea id="desc" class="p-textarea" rows="3">Keeps clippers running during power cuts. Test with one barber first.</textarea>
+        <div style="height:12px"></div>
+        <label class="p-label" for="stage">Stage</label>
+        <select id="stage" class="p-select">
+          <option>Ideas</option><option selected>Planning</option><option>Building</option><option>Testing</option><option>Completed</option>
+        </select>
+        <div style="height:14px"></div>
+        <button class="p-btn p-btn-primary" onclick="document.getElementById('done').style.display='block'">✦ Clarify with AI</button>
+        <p id="done" class="p-hint" style="display:none; color:var(--p-color-text-success)">✓ Plan generated: 7 tasks, next action highlighted below.</p>
+      </div>
+      <div class="next-action">
+        <span class="badge badge-info">Your next action • Polaris info</span>
+        <h3 style="margin:12px 0 6px; font-size:20px; letter-spacing:-.01em">Talk to 3 barbers today</h3>
+        <p style="opacity:.8; font-size:14px; line-height:1.6">Ask how much they spend weekly on fuel / charging. Save answers in Project Notes.</p>
+        <div style="display:flex; gap:10px; margin-top:14px">
+          <button class="p-btn" style="background:#fff; color:#1A1A1A">Mark done ✓</button>
+          <button class="p-btn p-btn-secondary" style="background:transparent; color:#fff; border-color:rgba(255,255,255,.4)">Snooze</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:8px 32px 40px; color:var(--p-color-text-secondary); font-size:12px" class="wrap">
+    SPARK local preview • Built on Shopify Polaris tokens (bg, surface, fill-brand, text, input, border-focus) • File: <kbd>design.html</kbd>
+  </footer>
+
+</main>
+</body>
+</html>
